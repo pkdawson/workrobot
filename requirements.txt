@@ -1,3 +1,5 @@
 # pyz3r
 ruamel.yaml
 tzdata
+disnake
+python-dotenv
