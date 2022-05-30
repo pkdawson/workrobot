@@ -1,0 +1,127 @@
+%YAML 1.2
+---
+defines:
+  beta_url: &beta_url https://variabeta.pythonanywhere.com
+  casual_random_starts: &casual_random_starts
+    - Gauntlet Top
+    - Green Brinstar Elevator
+    - Big Pink
+    - Etecoons Supers
+    - Wrecked Ship Main
+    - Business Center
+  hard_random_starts: &hard_random_starts
+    - Gauntlet Top
+    - Green Brinstar Elevator
+    - Big Pink
+    - Etecoons Supers
+    - Wrecked Ship Main
+    - Business Center
+    - Firefleas Top
+    - Bubble Mountain
+    - Mama Turtle
+    - Red Brinstar Elevator
+    - Golden Four
+
+races:
+  - datetime: 2022-06-04 14:30
+    desc: Casual - Full countdown, random start location
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    custom_settings:
+      majorsSplit: FullWithHUD
+      hud: on
+      startLocation: random
+      startLocationMultiSelect: *casual_random_starts
+      variaTweaks: on
+      suitsRestriction: off
+      morphPlacement: normal
+
+  - datetime: 2022-06-04 17:30
+    desc: Hard - Multi_Category_Randomizer_Week_1 (Full countdown, area rando)
+    skills_preset: Season_Races
+    settings_preset: Multi_Category_Randomizer_Week_1
+  
+  - datetime: 2022-06-05 13:00
+    desc: Multi_Category_Randomizer_Week_1
+    skills_preset: Season_Races
+    settings_preset: Multi_Category_Randomizer_Week_1
+
+  - datetime: 2022-06-11 14:30
+    desc: Casual - M/m
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    custom_settings:
+      majorsSplit: Major
+
+  - datetime: 2022-06-11 17:30
+    desc: Hard - Multi_Category_Randomizer_Week_2 (M/m, light area rando, boss shuffle)
+    skills_preset: Season_Races
+    settings_preset: Multi_Category_Randomizer_Week_2
+
+  - datetime: 2022-06-12 13:00
+    desc: Multi_Category_Randomizer_Week_2
+    skills_preset: Season_Races
+    settings_preset: Multi_Category_Randomizer_Week_2
+
+  - datetime: 2022-06-18 14:30
+    desc: Casual - Full, custom objective (100% items), VARIA tweaks on
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    baseurl: *beta_url
+    custom_settings:
+      majorsSplit: Full
+      variaTweaks: on
+      objective: collect 100% items
+
+  - datetime: 2022-06-18 17:30
+    desc: Hard - Multi_Category_Randomizer_Week_3 (Chozo, boss shuffle)
+    skills_preset: Season_Races
+    settings_preset: Multi_Category_Randomizer_Week_3
+
+  - datetime: 2022-06-19 13:00
+    desc: Multi_Category_Randomizer_Week_3
+    skills_preset: Season_Races
+    settings_preset: Multi_Category_Randomizer_Week_3
+
+  - datetime: 2022-06-25 14:30
+    desc: Casual - Mystery (no area rando)
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    baseurl: *beta_url
+    custom_settings:
+      doorsColorsRando: random
+      bossRandomization: random
+      majorsSplit: random
+      majorsSplitMultiSelect: [Full,Major,Chozo]
+      morphPlacement: random
+      morphPlacementMultiSelect: [early,late,normal]
+      gravityBehaviour: random
+      gravityBehaviourMultiSelect: [Balanced,Progressive]
+      objective: random
+      objectiveMultiSelect:
+        - kill kraid
+        - kill phantoon
+        - kill draygon
+        - kill ridley
+        - kill one G4
+        - kill two G4
+        - kill three G4
+        - kill all G4
+        - kill spore spawn
+        - kill botwoon
+        - kill crocomire
+        - kill golden torizo
+        - kill one miniboss
+        - kill two minibosses
+        - kill three minibosses
+        - kill all mini bosses
+
+  - datetime: 2022-06-25 17:30
+    desc: Hard - Multi_Category_Randomizer_Week_4 (Full countdown, random start, boss shuffle)
+    skills_preset: Season_Races
+    settings_preset: Multi_Category_Randomizer_Week_4
+
+  - datetime: 2022-06-26 13:00
+    desc: Multi_Category_Randomizer_Week_4
+    skills_preset: Season_Races
+    settings_preset: Multi_Category_Randomizer_Week_4

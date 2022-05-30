@@ -1,0 +1,6 @@
+[submodule "RandomMetroidSolver"]
+	path = RandomMetroidSolver
+	url = https://github.com/theonlydude/RandomMetroidSolver
+[submodule "pyz3r"]
+	path = pyz3r
+	url = https://github.com/pkdawson/pyz3r
