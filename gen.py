@@ -11,14 +11,15 @@ import io
 from rominfo import get_hash
 
 from ruamel.yaml import YAML
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 async def generate_seed(smv):
     smv.settings = await smv.get_settings()
     data = await smv.generate_game()
 
     if data['status'] != 'OK':
-        print(data['errorMsg'])
-        raise Exception()
+        raise Exception(data['errorMsg'])
 
     with open('temp.ips', 'wb') as fout:
         fout.write(b64decode(data['ips']))
@@ -38,12 +39,23 @@ async def generate_seed(smv):
     print(f"{smv.baseurl}/customizer/{data['seedKey']} ({hash})")
 
 
-def main():
+def get_next_race():
     yaml = YAML(typ='safe')
     with open('data/races.yaml', 'r') as fi:
         ydat = yaml.load(fi)
 
-    race = ydat['races'][1]
+    racetz = ZoneInfo('America/New_York')
+    now = datetime.now(timezone.utc)
+    for race in ydat['races']:
+        dt = datetime.fromisoformat(race['datetime']).replace(tzinfo=racetz)
+        if dt > now:
+            return race
+
+    raise Exception('no future races scheduled')
+
+
+def main():
+    race = get_next_race()
 
     smv = SuperMetroidVaria(
         skills_preset=race['skills_preset'],
@@ -58,4 +70,5 @@ def main():
     asyncio.events.set_event_loop(loop)
     loop.run_until_complete(generate_seed(smv))
 
-main()
+if __name__ == '__main__':
+    main()

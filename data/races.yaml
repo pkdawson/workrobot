@@ -34,7 +34,6 @@ races:
       startLocationMultiSelect: *casual_random_starts
       variaTweaks: on
       suitsRestriction: off
-      morphPlacement: normal
 
   - datetime: 2022-06-04 17:30
     desc: Hard - Multi_Category_Randomizer_Week_1 (Full countdown, area rando)
