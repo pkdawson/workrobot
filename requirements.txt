@@ -4,3 +4,4 @@ tzdata
 disnake
 python-dotenv
 racetime-bot
+apscheduler
