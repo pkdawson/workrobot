@@ -1,5 +1,4 @@
 import sys
-sys.path += ['pyz3r']
 from pyz3r.smvaria import SuperMetroidVaria
 import asyncio, asyncio.events
 
@@ -28,7 +27,7 @@ async def generate_seed(smv):
 
     old = bytes([0xFF]*3*1024*1024)
     new = ips.apply(old)
-    
+
     del data['ips']
     print(data)
     hash = get_hash(io.BytesIO(new))

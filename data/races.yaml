@@ -39,7 +39,7 @@ races:
     desc: Hard - Multi_Category_Randomizer_Week_1 (Full countdown, area rando)
     skills_preset: Season_Races
     settings_preset: Multi_Category_Randomizer_Week_1
-  
+
   - datetime: 2022-06-05 13:00
     desc: Multi_Category_Randomizer_Week_1
     skills_preset: Season_Races
@@ -71,6 +71,8 @@ races:
       majorsSplit: Full
       variaTweaks: on
       objective: collect 100% items
+      tourian: Fast
+      hud: on
 
   - datetime: 2022-06-18 17:30
     desc: Hard - Multi_Category_Randomizer_Week_3 (Chozo, boss shuffle)

@@ -1,4 +1,4 @@
-# pyz3r
+pyz3r
 ruamel.yaml
 tzdata
 disnake
