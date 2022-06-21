@@ -1,17 +1,15 @@
 from ruamel.yaml import YAML
 from datetime import datetime
-from zoneinfo import ZoneInfo
+from common import *
 
 def main():
-    racetz = ZoneInfo('America/New_York')
-
     yaml = YAML(typ='safe')
     with open('data/races.yaml', 'r') as fi:
         ydat = yaml.load(fi)
 
     prev_date = None
     for race in ydat['races']:
-        dt = datetime.fromisoformat(race['datetime']).replace(tzinfo=racetz)
+        dt = datetime.fromisoformat(race['datetime']).replace(tzinfo=RACETZ)
         ts = int(dt.timestamp())
         desc = race['desc']
 

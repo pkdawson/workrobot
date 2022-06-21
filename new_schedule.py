@@ -1,11 +1,9 @@
 import sys
 from ruamel.yaml import YAML
 from datetime import datetime, date, time
-from zoneinfo import ZoneInfo
+from common import *
 
 def main():
-    RACETZ = ZoneInfo('America/New_York')
-
     out = {'races' : []}
 
     yaml = YAML(typ='safe')

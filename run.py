@@ -1,5 +1,5 @@
 from datetime import datetime, timezone, timedelta
-from zoneinfo import ZoneInfo
+from common import *
 import time
 import shelve
 
@@ -7,14 +7,13 @@ from gen import get_next_race
 
 class Runner:
     def __init__(self):
-        self.racetz = ZoneInfo('America/New_York')
         self.db = shelve.open('races.db')
 
     def run(self):
         race = get_next_race()
 
         tstr = race['datetime']
-        t = datetime.fromisoformat(tstr).replace(tzinfo=self.racetz)
+        t = datetime.fromisoformat(tstr).replace(tzinfo=RACETZ)
         if tstr not in self.db:
             print('new race')
             self.db[tstr] = {'status': 'waiting'}

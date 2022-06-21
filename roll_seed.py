@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from pyz3r.smvaria import SuperMetroidVaria
 import asyncio, asyncio.events
 
@@ -11,7 +11,7 @@ from rominfo import get_hash
 
 from ruamel.yaml import YAML
 from datetime import datetime, timezone
-from zoneinfo import ZoneInfo
+from common import *
 
 async def generate_seed(smv):
     smv.settings = await smv.get_settings()
@@ -36,6 +36,7 @@ async def generate_seed(smv):
         print(f"Warnings: {data['errorMsg']}")
 
     print(f"{smv.baseurl}/customizer/{data['seedKey']} ({hash})")
+    os.remove('temp.ips')
 
 
 def get_next_race():
@@ -43,10 +44,9 @@ def get_next_race():
     with open('data/races.yaml', 'r') as fi:
         ydat = yaml.load(fi)
 
-    racetz = ZoneInfo('America/New_York')
     now = datetime.now(timezone.utc)
     for race in ydat['races']:
-        dt = datetime.fromisoformat(race['datetime']).replace(tzinfo=racetz)
+        dt = datetime.fromisoformat(race['datetime']).replace(tzinfo=RACETZ)
         if dt > now:
             return race
 
