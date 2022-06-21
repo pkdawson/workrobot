@@ -1,17 +1,17 @@
-import sys, os
-from pyz3r.smvaria import SuperMetroidVaria
-import asyncio, asyncio.events
-
-sys.path += ['RandomMetroidSolver']
-from rom.ips import IPS_Patch
-from base64 import b64decode
-import io
-
-from rominfo import get_hash
-
-from ruamel.yaml import YAML
-from datetime import datetime, timezone
+import sys
+sys.path += ['RandomMetroidSolver']  # nopep8
 from common import *
+from datetime import datetime, timezone
+from ruamel.yaml import YAML
+from rominfo import get_hash
+import io
+from base64 import b64decode
+from rom.ips import IPS_Patch
+import os
+from pyz3r.smvaria import SuperMetroidVaria
+import asyncio
+import asyncio.events
+
 
 async def generate_seed(smv):
     smv.settings = await smv.get_settings()
@@ -68,6 +68,7 @@ def main():
     loop = asyncio.events.new_event_loop()
     asyncio.events.set_event_loop(loop)
     loop.run_until_complete(generate_seed(smv))
+
 
 if __name__ == '__main__':
     main()

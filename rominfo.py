@@ -1,6 +1,5 @@
-
 import sys
-sys.path += ['RandomMetroidSolver']
+sys.path += ['RandomMetroidSolver']  # nopep8
 from RandomMetroidSolver.rom.rom import snes_to_pc, FakeROM
 
 words = (
@@ -38,13 +37,14 @@ words = (
     "BULL",
 )
 
+
 def get_hash(fi):
     buf = fi.read()
     rom = FakeROM(buf)
 
     hash = []
 
-    for x in (0,1,2,3):
+    for x in (0, 1, 2, 3):
         byte = rom.readByte(snes_to_pc(0xdfff00) + x)
         byte = byte & 0x1f
         hash.append(words[byte])

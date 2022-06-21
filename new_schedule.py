@@ -3,8 +3,9 @@ from ruamel.yaml import YAML
 from datetime import datetime, date, time
 from common import *
 
+
 def main():
-    out = {'races' : []}
+    out = {'races': []}
 
     yaml = YAML(typ='safe')
     with open('data/common.yaml', 'r') as fi:
@@ -26,7 +27,7 @@ def main():
                 if w['isoweekday'] == d.isoweekday():
                     t = time.fromisoformat(w['time'])
                     dt = datetime.combine(d, t, tzinfo=RACETZ)
-                    r = {'datetime' : dt.strftime('%Y-%m-%d %H:%M')}
+                    r = {'datetime': dt.strftime('%Y-%m-%d %H:%M')}
                     for k in w.keys():
                         if k not in ('isoweekday', 'time', 'msg'):
                             r[k] = w[k]
@@ -43,6 +44,7 @@ def main():
     yout.indent(mapping=2, sequence=4, offset=2)
     with open('data/races-new.yaml', 'w') as fout:
         yout.dump(out, fout)
+
 
 if __name__ == '__main__':
     main()
