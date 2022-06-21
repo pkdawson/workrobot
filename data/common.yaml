@@ -1,0 +1,43 @@
+weekly:
+  - isoweekday: 6
+    time: 14:30
+    msg: casual weekly starts {reltime}
+    desc: Casual
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+
+  - isoweekday: 6
+    time: 17:30
+    msg: hard weekly starts {reltime}
+    desc: Hard
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+
+  - isoweekday: 7
+    time: 13:00
+    msg: tournament practice race, starting {reltime} ({desc})
+    desc: Tournament Practice
+    skills_preset: Season_Races
+    settings_preset: Multi_Category_Randomizer_Week_1
+
+defines:
+  beta_url: &beta_url https://variabeta.pythonanywhere.com
+  casual_random_starts: &casual_random_starts
+    - Gauntlet Top
+    - Green Brinstar Elevator
+    - Big Pink
+    - Etecoons Supers
+    - Wrecked Ship Main
+    - Business Center
+  hard_random_starts: &hard_random_starts
+    - Gauntlet Top
+    - Green Brinstar Elevator
+    - Big Pink
+    - Etecoons Supers
+    - Wrecked Ship Main
+    - Business Center
+    - Firefleas Top
+    - Bubble Mountain
+    - Mama Turtle
+    - Red Brinstar Elevator
+    - Golden Four
