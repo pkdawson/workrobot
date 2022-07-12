@@ -5,3 +5,4 @@ disnake
 python-dotenv
 racetime-bot
 apscheduler
+tenacity

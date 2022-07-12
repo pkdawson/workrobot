@@ -1,8 +1,6 @@
 import sys
 sys.path += ['RandomMetroidSolver']  # nopep8
 from common import *
-from datetime import datetime, timezone
-from ruamel.yaml import YAML
 from rominfo import get_hash
 import io
 from base64 import b64decode
@@ -11,9 +9,14 @@ import os
 from pyz3r.smvaria import SuperMetroidVaria
 import asyncio
 import asyncio.events
+import racedata
+import logging
+from tenacity import retry, stop_after_attempt
 
 
+@retry(stop=stop_after_attempt(3))
 async def generate_seed(smv):
+    logger = logging.getLogger('workrobot')
     smv.settings = await smv.get_settings()
     data = await smv.generate_game()
 
@@ -29,32 +32,22 @@ async def generate_seed(smv):
     new = ips.apply(old)
 
     del data['ips']
-    print(data)
+    logger.info(data)
     hash = get_hash(io.BytesIO(new))
 
     if data['errorMsg'] != '':
-        print(f"Warnings: {data['errorMsg']}")
+        logger.warning(f"Warnings: {data['errorMsg']}")
 
-    print(f"{smv.baseurl}/customizer/{data['seedKey']} ({hash})")
     os.remove('temp.ips')
-
-
-def get_next_race():
-    yaml = YAML(typ='safe')
-    with open('data/races.yaml', 'r') as fi:
-        ydat = yaml.load(fi)
-
-    now = datetime.now(timezone.utc)
-    for race in ydat['races']:
-        dt = datetime.fromisoformat(race['datetime']).replace(tzinfo=RACETZ)
-        if dt > now:
-            return race
-
-    raise Exception('no future races scheduled')
+    return (f"{smv.baseurl}/customizer/{data['seedKey']}", hash)
 
 
 def main():
-    race = get_next_race()
+    async def roll(smv):
+        url, hash = await generate_seed(smv)
+        print(f"{url} ({hash})")
+
+    race = racedata.get_next()
 
     smv = SuperMetroidVaria(
         skills_preset=race['skills_preset'],
@@ -67,7 +60,7 @@ def main():
     )
     loop = asyncio.events.new_event_loop()
     asyncio.events.set_event_loop(loop)
-    loop.run_until_complete(generate_seed(smv))
+    loop.run_until_complete(roll(smv))
 
 
 if __name__ == '__main__':

@@ -15,7 +15,7 @@ weekly:
 
   - isoweekday: 7
     time: 13:00
-    msg: tournament practice race, starting {reltime} ({desc})
+    msg: race starts {reltime} ({desc})
     desc: Tournament Practice
     skills_preset: Season_Races
     settings_preset: Multi_Category_Randomizer_Week_1
