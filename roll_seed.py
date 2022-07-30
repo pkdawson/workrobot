@@ -47,7 +47,10 @@ def main():
         url, hash = await generate_seed(smv)
         print(f"{url} ({hash})")
 
-    race = racedata.get_next()
+    if len(sys.argv) > 1:
+        race = racedata.get(sys.argv[1])
+    else:
+        race = racedata.get_next()
 
     smv = SuperMetroidVaria(
         skills_preset=race['skills_preset'],

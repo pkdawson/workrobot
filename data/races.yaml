@@ -94,6 +94,11 @@ races:
     skills_preset: Season_Races
     settings_preset: Season_Races
     baseurl: *beta_url
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: FullWithHUD
+      hud: on
+      objective: kill all mini bosses
 
   - datetime: 2022-07-24 13:00
     desc: Casual - Chozo
@@ -119,8 +124,44 @@ races:
     desc: Hard - Mystery (no door color rando)
     skills_preset: Season_Races
     settings_preset: Season_Races
+    baseurl: *beta_url
+    custom_settings:
+      progressionSpeed: speedrun
+      progressionDifficulty: random
+      progressionDifficultyMultiSelect: [easier,normal,harder]
+      missileQty: random
+      superQty: random
+      powerBombQty: random
+      minorQty: random
+      areaRandomization: random
+      escapeRando: random
+      bossRandomization: random
+      majorsSplit: random
+      majorsSplitMultiSelect: [Full,Major,Chozo]
+      morphPlacement: random
+      morphPlacementMultiSelect: [early,late,normal]
+      gravityBehaviour: random
+      gravityBehaviourMultiSelect: [Balanced,Progressive]
+      objective: random
+      objectiveMultiSelect:
+        - kill kraid
+        - kill phantoon
+        - kill draygon
+        - kill ridley
+        - kill one G4
+        - kill two G4
+        - kill three G4
+        - kill all G4
+        - kill spore spawn
+        - kill botwoon
+        - kill crocomire
+        - kill golden torizo
+        - kill one miniboss
+        - kill two minibosses
+        - kill three minibosses
+        - kill all mini bosses
 
   - datetime: 2022-07-31 13:00
     desc: Hard - M/m, progressive suits, starter charge beam
     skills_preset: Season_Races
-    settings_preset: Season_Races
+    settings_preset: haste
