@@ -20,11 +20,11 @@ def get(tstr):
 
 def get_next():
     ydat = _load_yaml()
-    now = datetime.now(RACETZ)
+    now = datetime.now()
 
     # TODO: sort first, just in case
     for race in ydat['races']:
-        dt = datetime.fromisoformat(race['datetime']).replace(tzinfo=RACETZ)
+        dt = to_datetime(race['datetime'])
         if dt > now:
             return race
 

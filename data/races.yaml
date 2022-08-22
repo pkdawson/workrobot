@@ -45,8 +45,6 @@ defines:
   casual: &casual
     skills_preset: casual
     settings_preset: VARIA_Weekly
-    custom_settings:
-      variaTweaks: on
 
   hard: &hard
     skills_preset: Season_Races

@@ -13,12 +13,12 @@ class DiscordClient(disnake.Client):
         super().__init__(activity=self.get_activity(), *args, **kwargs)
 
     def get_activity(self):
-        return disnake.Game('on Saturday/Sunday')
+        return disnake.Game('on Saturday')
 
     async def on_ready(self):
         self.logger.info(f'Discord client logged in as {self.user}')
 
-    async def send_message(self, msg):
+    async def send_announcement(self, msg):
         await self.wait_until_ready()
         chan = self.get_channel(self.channel_id)
         if chan:
@@ -26,8 +26,15 @@ class DiscordClient(disnake.Client):
         else:
             raise Exception("channel not found")
 
+    async def dm(self, userid, msg):
+        await self.wait_until_ready()
+        user = await self.fetch_user(userid)
+        if user:
+            await user.send(msg)
+
 
 if __name__ == '__main__':
+    import asyncio
     loop = asyncio.get_event_loop()
     import asyncio
     logging.basicConfig(level=logging.DEBUG)

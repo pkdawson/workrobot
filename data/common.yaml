@@ -1,14 +1,14 @@
 weekly:
   - isoweekday: 6
     time: 14:30
-    msg: casual weekly starts {reltime}
+    msg: casual weekly starts {reltime} ({desc})
     desc: Casual
     skills_preset: casual
     settings_preset: VARIA_Weekly
 
   - isoweekday: 6
     time: 17:30
-    msg: hard weekly starts {reltime}
+    msg: hard weekly starts {reltime} ({desc})
     desc: Hard
     skills_preset: Season_Races
     settings_preset: Season_Races

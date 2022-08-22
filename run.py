@@ -1,80 +1,74 @@
 import os
 from datetime import datetime, timedelta, time
 from common import *
-import shelve
-
 import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-
-from roll_seed import generate_seed
 from ruamel.yaml import YAML
-
 from dc import DiscordClient
 from rt import RTBot
 import logging
 import racedata
-from enum import Enum
+import argparse
 
 
-class Todo(Enum):
-    # the bot's to-do list
-    WAITING = 0
-    OPEN_ROOM = 100
-    ROLL_SEED = 110
-    START_RACE = 120
-    DISCORD_ANNOUNCE = 200
+class ErrorHandler(logging.Handler):
+    def __init__(self, dc):
+        self.dc = dc
+        super().__init__()
+
+    def emit(self, record):
+        if record.levelno >= logging.ERROR and not record.module.startswith('disnake'):
+            msg = self.format(record)
+            loop = asyncio.events.get_event_loop()
+            loop.create_task(self.dc.dm(int(os.getenv('DISCORD_ME')), msg))
 
 
 class Runner:
-    def __init__(self):
+    def __init__(self, test_race=False):
+        self.test_race = test_race
         self.loop = asyncio.events.new_event_loop()
         asyncio.events.set_event_loop(self.loop)
 
-        self.db = shelve.open('races.db', writeback=True)
         self.scheduler = AsyncIOScheduler(event_loop=self.loop)
         self.dc = DiscordClient()
-        logging.basicConfig(level=logging.WARNING, handlers=[
-                            logging.StreamHandler()])
+        logging.basicConfig(level=logging.INFO, handlers=[
+                            logging.StreamHandler(), ErrorHandler(self.dc)])
         self.lock = asyncio.Lock()
         self.logger = logging.getLogger('workrobot')
         self.logger.setLevel(logging.INFO)
+        self.races_scheduled = set()
+        self.dbg_once = 0
+
+    def handle_exception(self, loop, context):
+        self.logger.error(context)
 
     async def load_schedule(self):
+        self.logger.info('load_schedule')
+        now = datetime.now()
         ydat = racedata._load_yaml()
+        if self.test_race:
+            self.test_race = False
+            ydat['races'][0]['desc'] = 'TEST RACE PLEASE IGNORE'
+            ydat['races'][0]['datetime'] = (
+                datetime.now(RACETZ) + timedelta(minutes=21)).isoformat()
 
         for race in ydat['races']:
             tstr = race['datetime']
-            if tstr not in self.db:
-                self.logger.info(f'new race {tstr}')
-                self.db[tstr] = set()
-
-        now = datetime.now(RACETZ)
-        for tstr in self.db:
-            t = datetime.fromisoformat(tstr).replace(tzinfo=RACETZ)
+            t = to_datetime(tstr)
             if t > now:
                 dt = t - now
                 if dt < timedelta(minutes=60):
-                    if self.db[tstr] == 'waiting':
+                    if tstr not in self.races_scheduled:
+                        self.races_scheduled.add(tstr)
                         self.logger.info('race soon')
                         room_time = t - timedelta(minutes=30)
-                        self.scheduler.add_job(self.open_raceroom, 'date', run_date=room_time, args=[
-                                               tstr], id=f'{tstr}:open')
-                        self.db[tstr] = 'opening'
+                        self.scheduler.add_job(
+                            self.open_raceroom, 'date', run_date=room_time, args=[race], id=tstr)
 
-        self.db.sync()
-
-    async def open_raceroom(self, tstr):
-        # we really don't need to worry about starting more than one race at a time,
-        # but let's be safe anyway
-        async with self.lock:
-            self.rtbot.next_race = tstr
-            name = await self.rtbot.create_room()
-            self.logger.info(f'Opened {name} for race at {tstr}')
-
-            # wait for handler to start and grab the next_race
-            while self.rtbot.next_race is not None:
-                await asyncio.sleep(1)
-        await self.announce_raceroom(tstr, name)
+    async def open_raceroom(self, race):
+        name = await self.rtbot.create_room(race)
+        self.logger.info(f"Opened {name} for race at {race['datetime']}")
+        await self.announce_raceroom(race, name)
 
     def get_weekly_info(self, dt):
         yaml = YAML(typ='safe')
@@ -87,14 +81,12 @@ class Runner:
         else:
             return {'msg': 'race starts {reltime} ({desc})'}
 
-    async def announce_raceroom(self, tstr, name):
-        dt = datetime.fromisoformat(tstr).replace(tzinfo=RACETZ)
+    async def announce_raceroom(self, race, name):
+        dt = to_datetime(race['datetime'])
         w = self.get_weekly_info(dt)
         ts = int(dt.timestamp())
         reltime = f'<t:{ts}:R>'
-
-        r = racedata.get(tstr)
-        await self.dc.send_message(w['msg'].format(reltime=reltime, desc=r['desc']) + ' ' + self.rtbot.http_uri(f'/{name}'))
+        await self.dc.send_announcement(w['msg'].format(reltime=reltime, desc=race['desc']) + ' ' + self.rtbot.http_uri(f'/{name}'))
 
     def run(self):
         self.rtbot = RTBot(
@@ -109,20 +101,27 @@ class Runner:
         })
         self.scheduler.start()
 
+        # race schedule
         self.scheduler.add_job(self.load_schedule)
         self.scheduler.add_job(
             self.load_schedule, 'interval', minutes=5, id='load_schedule')
 
+        # racetime
         self.loop.create_task(self.rtbot.reauthorize())
-        self.loop.create_task(self.rtbot.refresh_races())
+
+        # discord
         self.loop.create_task(self.dc.start(os.getenv('DISCORD_TOKEN')))
 
+        self.loop.set_exception_handler(self.handle_exception)
         self.loop.run_forever()
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--test-race', action='store_true')
+    args = parser.parse_args()
     try:
-        r = Runner()
+        r = Runner(test_race=args.test_race)
         r.run()
     finally:
-        r.db.close()
+        pass

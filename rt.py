@@ -4,54 +4,119 @@ import aiohttp
 import racedata
 import logging
 from datetime import datetime, timedelta
+import json
+import asyncio
+from functools import partial
+from babel.dates import format_timedelta
+from roll_seed import roll_race
 from common import *
 from dotenv import load_dotenv
 load_dotenv()
 
 
+def format_td(td):
+    return format_timedelta(td, locale='en_US', granularity='minute')
+
+
 class RTHandler(RaceHandler):
-    def __init__(self, scheduler, next_race, **kwargs):
+    SEED_ROLL_TIME = timedelta(minutes=15)
+    REMINDER_TIME = timedelta(minutes=5)
+    REMINDER2_TIME = timedelta(minutes=1)
+    FORCE_START_TIME = timedelta(minutes=5)
+
+    def __init__(self, scheduler, **kwargs):
         self.scheduler = scheduler
-        self.tstr = next_race
         self.logger = logging.getLogger('workrobot')
         super().__init__(**kwargs)
 
+    def all_ready(self):
+        for entrant in self.data.get('entrants'):
+            if entrant['status']['value'] != 'ready':
+                return False
+        return True
+
     async def begin(self):
-        self.logger.info(f'Begin handler for {self.tstr}')
-        await self.send_message(f'The race will start in 30 minutes. A seed will be rolled 15 minutes before that.')
+        tstr = self.race['datetime']
+        self.logger.info(f"Begin handler for {tstr}")
+        # await self.add_monitor(os.getenv('RACETIME_ME'))
+        self.dt = to_datetime(tstr)
+        delta = self.dt - datetime.now()
+        msg = f"The race will start in {format_td(delta)}."
+        if self.race.get('settings_preset'):
+            msg += f" A seed will be rolled {format_td(self.SEED_ROLL_TIME)} before the start."
+            run_date = self.dt - self.SEED_ROLL_TIME
+            self.scheduler.add_job(self.task_roll_seed,
+                                   'date', run_date=run_date)
+        else:
+            msg += ' A seed will NOT be automatically rolled.'
+        await self.send_message(msg)
 
-        dt = datetime.fromisoformat(self.tstr).replace(tzinfo=RACETZ)
-        self.scheduler.add_job(self.roll_seed, 'date', run_date=dt -
-                               timedelta(minutes=15), id=f'{self.tstr}:roll')
+        run_date = self.dt - self.REMINDER_TIME
+        self.scheduler.add_job(self.task_remind, 'date', run_date=run_date)
+        run_date = self.dt - self.REMINDER2_TIME
+        self.scheduler.add_job(self.task_remind, 'date', run_date=run_date)
+        run_date = self.dt
+        self.scheduler.add_job(self.task_start_race, 'date', run_date=run_date)
 
-    async def roll_seed(self):
-        self.logger.info(f'Rolling seed for {self.tstr}')
-        rd = racedata.get(self.tstr)
-        await self.send_message(str(rd))
+    async def task_roll_seed(self):
+        tstr = self.race['datetime']
+        self.logger.info(f'Rolling seed for {tstr}')
+        await self.send_message('Generating seed, please wait...')
+        try:
+            url, hash = await roll_race(self.race)
+            await self.send_message(f"{url} ({hash})")
+            await self.set_bot_raceinfo(f"{url} ({hash})")
+        except Exception as e:
+            await self.send_message(f"ERROR: {e}")
+            self.logger.error(
+                f"{self.data['name']} Exception rolling seed: {e}")
+
+    async def task_remind(self):
+        delta = self.dt - datetime.now()
+        await self.send_message(f"The race will start in {format_td(delta)}.")
+
+    async def task_start_race(self):
+        if len(self.data['entrants']) < 2:
+            await self.send_message("Not enough entrants.")
+            # await self.cancel_race()
+            return
+
+        if self.all_ready():
+            await self.force_start()
+        else:
+            await self.send_message("@unready please ready")
+            await self.send_message(f"The race will start in {format_td(self.FORCE_START_TIME)}. Entrants who are not ready will be removed.")
+            run_date = self.dt + self.FORCE_START_TIME
+            self.scheduler.add_job(self.task_force_start,
+                                   'date', run_date=run_date)
+
+    async def task_force_start(self):
+        try:
+            await self.force_start()
+        except Exception as e:
+            self.logger.error(e)
+            await self.send_message("Failed to start race, giving up.")
 
 
 class RTBot(Bot):
     def __init__(self, scheduler, *args, **kwargs):
         self.racetime_host = os.getenv('RACETIME_HOST')
         self.racetime_secure = True if self.racetime_host == 'racetime.gg' else False
+        self.racetime_goal = os.getenv('RACETIME_GOAL')
         self.room_names = set()
         self.scheduler = scheduler
-        self.next_race = None
         super().__init__(*args, **kwargs)
 
     def get_handler_class(self):
         return RTHandler
 
     def get_handler_kwargs(self, *args, **kwargs):
-        next_race = self.next_race
-        self.next_race = None
         return {
             **super().get_handler_kwargs(*args, **kwargs),
             'scheduler': self.scheduler,
-            'next_race': next_race,
         }
 
-    async def req(self, endpoint, data):
+    async def post(self, endpoint, data):
         url = self.http_uri(f'/o/{self.category_slug}/{endpoint}')
         h = {
             'Authorization': 'Bearer ' + self.access_token,
@@ -59,13 +124,40 @@ class RTBot(Bot):
         async with aiohttp.request(method='post', url=url, headers=h, raise_for_status=True, data=data) as resp:
             return resp
 
-    async def create_room(self):
+    async def get(self, endpoint):
+        url = self.http_uri(f'/o/{self.category_slug}/{endpoint}')
+        h = {
+            'Authorization': 'Bearer ' + self.access_token,
+        }
+        async with aiohttp.request(method='get', url=url, headers=h, raise_for_status=True) as resp:
+            return resp
+
+    async def join_room(self, race, name, data_url):
+        def done(task_name, *args):
+            del self.handlers[task_name]
+        try:
+            async with aiohttp.request(
+                method='get',
+                url=self.http_uri(data_url),
+                raise_for_status=True,
+            ) as resp:
+                race_data = json.loads(await resp.read())
+        except Exception as e:
+            self.logger.error(
+                'Fatal error when attempting to retrieve summary data.', exc_info=True)
+            raise e
+        handler = self.create_handler(race_data)
+        handler.race = race
+        self.handlers[name] = self.loop.create_task(handler.handle())
+        self.handlers[name].add_done_callback(partial(done, name))
+
+    async def create_room(self, race):
         d = {
-            'goal': 'Beat the game',
-            'team_race': False,
+            'goal': self.racetime_goal,
+            'team_race': race.get('team', False),
             'invitational': False,
             'unlisted': False,
-            'info_user': '',
+            'info_user': f"VARIA Weekly - {race['desc']}",
             'info_bot': '',
             'require_even_teams': False,
             'start_delay': 15,
@@ -81,15 +173,14 @@ class RTBot(Bot):
             'chat_message_delay': 0,
         }
 
-        resp = await self.req('startrace', d)
+        resp = await self.post('startrace', d)
         if resp:
             name = resp.headers['Location'][1:]
+            data_url = f'/{name}/data'
             self.room_names.add(name)
             self.logger.info(f'Opened {name}')
+            await self.join_room(race, name, data_url)
             return name
 
     def should_handle(self, race_data):
-        # ignore rooms not created by us
-        if race_data['name'] in self.room_names:
-            return super().should_handle(race_data)
         return False

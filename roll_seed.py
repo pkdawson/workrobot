@@ -11,10 +11,10 @@ import asyncio
 import asyncio.events
 import racedata
 import logging
-from tenacity import retry, stop_after_attempt
+from tenacity import retry, stop_after_attempt, stop_after_delay, RetryError
 
 
-@retry(stop=stop_after_attempt(3))
+@retry(stop=(stop_after_attempt(3) | stop_after_delay(60)), reraise=True)
 async def generate_seed(smv):
     logger = logging.getLogger('workrobot')
     smv.settings = await smv.get_settings()
@@ -42,15 +42,9 @@ async def generate_seed(smv):
     return (f"{smv.baseurl}/customizer/{data['seedKey']}", hash)
 
 
-def main():
-    async def roll(smv):
-        url, hash = await generate_seed(smv)
-        print(f"{url} ({hash})")
-
-    if len(sys.argv) > 1:
-        race = racedata.get(sys.argv[1])
-    else:
-        race = racedata.get_next()
+async def roll_race(race):
+    sd = race['custom_settings'] if 'custom_settings' in race else {}
+    sd['relaxed_round_robin_cf'] = 'off'
 
     smv = SuperMetroidVaria(
         skills_preset=race['skills_preset'],
@@ -59,12 +53,20 @@ def main():
         baseurl=race['baseurl'] if 'baseurl' in race else 'https://randommetroidsolver.pythonanywhere.com',
         username=None,
         password=None,
-        settings_dict=race['custom_settings'] if 'custom_settings' in race else None
+        settings_dict=sd
     )
-    loop = asyncio.events.new_event_loop()
-    asyncio.events.set_event_loop(loop)
-    loop.run_until_complete(roll(smv))
+
+    return await generate_seed(smv)
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 1:
+        race = racedata.get(sys.argv[1])
+    else:
+        race = racedata.get_next()
+
+    loop = asyncio.events.new_event_loop()
+    asyncio.events.set_event_loop(loop)
+
+    url, hash = loop.run_until_complete(roll_race(race))
+    print(f"{url} ({hash})")
