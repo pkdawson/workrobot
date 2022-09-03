@@ -56,15 +56,16 @@ class Runner:
             tstr = race['datetime']
             t = to_datetime(tstr)
             if t > now:
-                dt = t - now
-                if dt < timedelta(minutes=60):
+                delta = t - now
+                self.logger.info(f'Scheduled race in {delta}')
+                if delta < timedelta(minutes=60):
                     if tstr not in self.races_scheduled:
                         self.races_scheduled.add(tstr)
                         self.logger.info(f'Race soon: {tstr}')
                         self.logger.info(race)
-                        room_time = t - timedelta(minutes=35)
+                        room_time = t - timedelta(minutes=30)
                         self.scheduler.add_job(
-                            self.open_raceroom, 'date', run_date=room_time, args=[race], id=tstr)
+                            self.open_raceroom, 'date', run_date=room_time, args=[race], id=tstr, misfire_grace_time=600)
 
     async def open_raceroom(self, race):
         name = await self.rtbot.create_room(race)
@@ -98,7 +99,7 @@ class Runner:
             logger=logging.getLogger('racetime'))
 
         self.scheduler.configure(job_defaults={
-            'misfire_grace_time': 10*60,  # 10 minutes
+            'misfire_grace_time': 15,
         })
         self.scheduler.start()
 

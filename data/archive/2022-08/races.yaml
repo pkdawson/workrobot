@@ -88,61 +88,68 @@ defines:
       objectiveMultiSelect: *boss_objectives
 
 races:
-  - datetime: 2022-09-03 14:30
-    desc: Casual - Full countdown
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
+  - datetime: 2022-08-06 14:30
+    desc: Casual - Full countdown, random start
+    <<: *casual
     custom_settings:
+      variaTweaks: on
       majorsSplit: FullWithHUD
       hud: on
-
-  - datetime: 2022-09-03 17:30
-    desc: Hard - Full countdown, boss shuffle
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    custom_settings:
-      progressionSpeed: speedrun
-      majorsSplit: FullWithHUD
-      hud: on
-      bossRandomization: on
-
-  - datetime: 2022-09-10 14:30
-    desc: Casual - Co-op semi-plando (Full, boss shuffle, Green Brinstart)
-    team: true
-
-  - datetime: 2022-09-10 17:30
-    desc: Hard - haste (M/m, progressive suits, starter charge)
-    skills_preset: Season_Races
-    settings_preset: haste
-
-  - datetime: 2022-09-17 14:30
-    desc: Casual - Chozo
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
-    custom_settings:
-      majorsSplit: Chozo
-
-  - datetime: 2022-09-17 17:30
-    desc: Hard - Mystery
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    <<: *hard_mystery
-
-  - datetime: 2022-09-24 14:30
-    desc: Casual - Full countdown, Maridia start
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
-    custom_settings:
-      majorsSplit: FullWithHUD
-      hud: on
-      startLocation: Aqueduct
+      startLocation: random
       startLocationMultiSelect: *casual_random_starts
       suitsRestriction: off
 
-  - datetime: 2022-09-24 17:30
-    desc: Hard - Full
-    skills_preset: Season_Races
-    settings_preset: Season_Races
+  - datetime: 2022-08-06 17:30
+    desc: Hard - M/m
+    <<: *hard
+
+  - datetime: 2022-08-13 14:30
+    desc: Casual - Chozo, door color rando
+    <<: *casual
+    custom_settings:
+      majorsSplit: Chozo
+      doorsColorsRando: on
+
+  - datetime: 2022-08-13 17:30
+    desc: Hard - Full countdown
+    <<: *hard
     custom_settings:
       progressionSpeed: speedrun
-      majorsSplit: Full
+      majorsSplit: FullWithHUD
+      hud: on
+
+  - datetime: 2022-08-20 14:30
+    desc: Casual - M/m, boss shuffle
+    <<: *casual
+    custom_settings:
+      majorsSplit: Major
+      bossRandomization: on
+
+  - datetime: 2022-08-20 17:30
+    desc: Hard - Full countdown, random start, area rando
+    <<: *hard
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: FullWithHUD
+      hud: on
+      startLocation: random
+      startLocationMultiSelect: *hard_random_starts
+      variaTweaks: on
+      suitsRestriction: off
+      areaRandomization: on
+      areaLayout: on
+      escapeRando: on
+      removeEscapeEnemies: on
+
+  - datetime: 2022-08-27 14:30
+    desc: Casual - Mystery (no area rando)
+    <<: [*casual, *casual_mystery]
+
+  - datetime: 2022-08-27 17:30
+    desc: Hard - M/m, custom objective (kill three G4)
+    <<: *hard
+    baseurl: *beta_url
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: Major
+      objective: kill three G4

@@ -7,3 +7,5 @@ racetime-bot
 apscheduler
 tenacity
 babel
+tortoise-orm
+aiosqlite
