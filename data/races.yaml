@@ -135,8 +135,7 @@ races:
     custom_settings:
       majorsSplit: FullWithHUD
       hud: on
-      startLocation: Aqueduct
-      startLocationMultiSelect: *casual_random_starts
+      startLocation: Watering Hole
       suitsRestriction: off
 
   - datetime: 2022-09-24 17:30
