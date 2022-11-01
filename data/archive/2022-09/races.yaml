@@ -1,0 +1,147 @@
+%YAML 1.2
+---
+defines:
+  beta_url: &beta_url https://variabeta.pythonanywhere.com
+
+  casual_random_starts: &casual_random_starts
+    - Gauntlet Top
+    - Green Brinstar Elevator
+    - Big Pink
+    - Etecoons Supers
+    - Wrecked Ship Main
+    - Business Center
+
+  hard_random_starts: &hard_random_starts
+    - Gauntlet Top
+    - Green Brinstar Elevator
+    - Big Pink
+    - Etecoons Supers
+    - Wrecked Ship Main
+    - Business Center
+    - Firefleas Top
+    - Bubble Mountain
+    - Mama Turtle
+    - Red Brinstar Elevator
+    - Golden Four
+
+  boss_objectives: &boss_objectives
+    - kill kraid
+    - kill phantoon
+    - kill draygon
+    - kill ridley
+    - kill one G4
+    - kill two G4
+    - kill three G4
+    - kill all G4
+    - kill spore spawn
+    - kill botwoon
+    - kill crocomire
+    - kill golden torizo
+    - kill one miniboss
+    - kill two minibosses
+    - kill three minibosses
+    - kill all mini bosses
+
+  casual: &casual
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+
+  hard: &hard
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+
+  casual_mystery: &casual_mystery
+    baseurl: *beta_url
+    custom_settings:
+      progressionDifficultyMultiSelect: [easier, normal, harder]
+      doorsColorsRando: random
+      bossRandomization: random
+      majorsSplit: random
+      majorsSplitMultiSelect: [Full, Major, Chozo]
+      morphPlacement: random
+      morphPlacementMultiSelect: [early, late, normal]
+      gravityBehaviour: random
+      gravityBehaviourMultiSelect: [Balanced, Progressive]
+      objective: random
+      objectiveMultiSelect: *boss_objectives
+
+  hard_mystery: &hard_mystery
+    baseurl: *beta_url
+    custom_settings:
+      progressionSpeed: speedrun
+      missileQty: random
+      superQty: random
+      powerBombQty: random
+      minorQty: random
+      areaRandomization: random
+      escapeRando: random
+      bossRandomization: random
+      majorsSplit: random
+      majorsSplitMultiSelect: [Full, Major, Chozo]
+      morphPlacement: random
+      morphPlacementMultiSelect: [early, late, normal]
+      gravityBehaviour: random
+      gravityBehaviourMultiSelect: [Balanced, Progressive]
+      objective: random
+      objectiveMultiSelect: *boss_objectives
+
+races:
+  - datetime: 2022-09-03 14:30
+    desc: Casual - Full countdown
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    custom_settings:
+      majorsSplit: FullWithHUD
+      hud: on
+
+  - datetime: 2022-09-03 17:30
+    desc: Hard - Full countdown, boss shuffle
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: FullWithHUD
+      hud: on
+      bossRandomization: on
+
+  - datetime: 2022-09-10 14:30
+    desc: Casual - Co-op semi-plando (Full, boss shuffle, Green Brinstart)
+    team: true
+
+  - datetime: 2022-09-10 17:30
+    desc: Hard - haste (M/m, progressive suits, starter charge)
+    skills_preset: Season_Races
+    settings_preset: haste
+
+  - datetime: 2022-09-17 14:30
+    desc: Casual - Chozo
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    custom_settings:
+      majorsSplit: Chozo
+
+  - datetime: 2022-09-17 17:30
+    desc: Hard - Mystery
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    <<: *hard_mystery
+
+  - datetime: 2022-09-24 14:30
+    desc: Casual - Full countdown, Maridia start
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    custom_settings:
+      majorsSplit: FullWithHUD
+      hud: on
+      startLocation: Watering Hole
+      suitsRestriction: off
+
+  - datetime: 2022-09-24 17:30
+    desc: Hard - Full
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: Full

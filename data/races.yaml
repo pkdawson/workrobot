@@ -42,6 +42,39 @@ defines:
     - kill three minibosses
     - kill all mini bosses
 
+  mystery_objectives: &mystery_objectives
+    - kill kraid
+    - kill phantoon
+    - kill draygon
+    - kill ridley
+    - kill one G4
+    - kill two G4
+    - kill three G4
+    - kill spore spawn
+    - kill botwoon
+    - kill crocomire
+    - kill golden torizo
+    - kill one miniboss
+    - kill two minibosses
+    - kill three minibosses
+    - kill all mini bosses
+    - collect 25% items
+    - collect 50% items
+    - clear crateria
+    - clear green brinstar
+    - clear red brinstar
+    - clear wrecked ship
+    - clear kraid's lair
+    - clear upper norfair
+    - clear croc's lair
+    - clear lower norfair
+    - clear west maridia
+    - clear east maridia
+    - tickle the red fish
+    - kill the orange geemer
+    - visit the animals
+    - kill king cacatac
+
   casual: &casual
     skills_preset: casual
     settings_preset: VARIA_Weekly
@@ -64,8 +97,10 @@ defines:
       morphPlacementMultiSelect: [early, late, normal]
       gravityBehaviour: random
       gravityBehaviourMultiSelect: [Balanced, Progressive]
-      objective: random
-      objectiveMultiSelect: *boss_objectives
+      objectiveRandom: "true"
+      nbObjective: 4
+      objective: *mystery_objectives
+      objectiveMultiSelect: *mystery_objectives
 
   hard_mystery: &hard_mystery
     baseurl: *beta_url
@@ -88,60 +123,124 @@ defines:
       objectiveMultiSelect: *boss_objectives
 
 races:
-  - datetime: 2022-09-03 14:30
-    desc: Casual - Full countdown
+  - datetime: 2022-10-01 14:30
+    desc: Casual - M/m
     skills_preset: casual
     settings_preset: VARIA_Weekly
     custom_settings:
-      majorsSplit: FullWithHUD
-      hud: on
+      majorsSplit: Major
 
-  - datetime: 2022-09-03 17:30
-    desc: Hard - Full countdown, boss shuffle
+  - datetime: 2022-10-01 17:30
+    desc: Hard - M/m, light area rando
     skills_preset: Season_Races
     settings_preset: Season_Races
     custom_settings:
       progressionSpeed: speedrun
-      majorsSplit: FullWithHUD
-      hud: on
-      bossRandomization: on
+      majorsSplit: Major
+      areaRandomization: on
+      areaLayout: on
+      lightAreaRandomization: on
+      escapeRando: on
+      removeEscapeEnemies: on
 
-  - datetime: 2022-09-10 14:30
-    desc: Casual - Co-op semi-plando (Full, boss shuffle, Green Brinstart)
-    team: true
-
-  - datetime: 2022-09-10 17:30
-    desc: Hard - haste (M/m, progressive suits, starter charge)
-    skills_preset: Season_Races
-    settings_preset: haste
-
-  - datetime: 2022-09-17 14:30
-    desc: Casual - Chozo
+  - datetime: 2022-10-08 14:30
+    desc: Casual - Chozo, boss shuffle
     skills_preset: casual
     settings_preset: VARIA_Weekly
     custom_settings:
       majorsSplit: Chozo
+      bossRandomization: on
 
-  - datetime: 2022-09-17 17:30
-    desc: Hard - Mystery
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    <<: *hard_mystery
-
-  - datetime: 2022-09-24 14:30
-    desc: Casual - Full countdown, Maridia start
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
-    custom_settings:
-      majorsSplit: FullWithHUD
-      hud: on
-      startLocation: Watering Hole
-      suitsRestriction: off
-
-  - datetime: 2022-09-24 17:30
-    desc: Hard - Full
+  - datetime: 2022-10-08 17:30
+    desc: Hard - Full countdown
     skills_preset: Season_Races
     settings_preset: Season_Races
     custom_settings:
       progressionSpeed: speedrun
-      majorsSplit: Full
+      majorsSplit: FullWithHUD
+      hud: on
+
+  - datetime: 2022-10-15 14:30
+    desc: Casual - Multiworld (M/m)
+    team: true
+
+  - datetime: 2022-10-15 17:30
+    desc: Hard - Full countdown, random objectives
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    baseurl: *beta_url
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: FullWithHUD
+      hud: on
+      objectiveRandom: "true"
+      nbObjective: 4
+      objective:
+        - kill kraid
+        - kill phantoon
+        - kill draygon
+        - kill ridley
+        - kill one G4
+        - kill two G4
+        - kill three G4
+        - kill spore spawn
+        - kill botwoon
+        - kill crocomire
+        - kill golden torizo
+        - kill one miniboss
+        - kill two minibosses
+        - kill three minibosses
+        - kill all mini bosses
+        - collect 25% items
+        - collect 50% items
+        - clear crateria
+        - clear green brinstar
+        - clear red brinstar
+        - clear wrecked ship
+        - clear kraid's lair
+        - clear upper norfair
+        - clear croc's lair
+        - clear lower norfair
+        - clear west maridia
+        - clear east maridia
+        - tickle the red fish
+        - kill the orange geemer
+        - visit the animals
+        - kill king cacatac
+
+  - datetime: 2022-10-22 14:30
+    desc: Casual - Mystery
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    <<: *casual_mystery
+
+  - datetime: 2022-10-22 17:30
+    desc: Hard - Chozo
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: Chozo
+
+  - datetime: 2022-10-29 14:30
+    desc: Casual - Full countdown
+    <<: *casual
+    custom_settings:
+      majorsSplit: FullWithHUD
+      hud: on
+
+  - datetime: 2022-10-29 17:30
+    desc: Hard - Full countdown, area rando, random start
+    <<: *hard
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: FullWithHUD
+      hud: on
+      startLocation: random
+      startLocationMultiSelect: *hard_random_starts
+      variaTweaks: on
+      suitsRestriction: off
+      areaRandomization: on
+      areaLayout: on
+      escapeRando: on
+      removeEscapeEnemies: on

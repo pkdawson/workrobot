@@ -45,7 +45,7 @@ async def generate_seed(smv):
 async def roll_race(race):
     sd = race.get('custom_settings', {})
     sd['relaxed_round_robin_cf'] = 'off'
-    sd['objectiveRandom'] = 'false'
+    sd['objectiveRandom'] = sd.get('objectiveRandom', 'false')
 
     smv = SuperMetroidVaria(
         skills_preset=race['skills_preset'],
