@@ -87,6 +87,7 @@ defines:
   casual_mystery: &casual_mystery
     custom_settings:
       progressionDifficultyMultiSelect: [easier, normal, harder]
+      doorsColorsRando: random
       bossRandomization: random
       majorsSplit: random
       majorsSplitMultiSelect: [Full, Major, Chozo]
@@ -106,7 +107,7 @@ defines:
       superQty: random
       powerBombQty: random
       minorQty: random
-      # areaRandomization: random
+      areaRandomization: random
       escapeRando: random
       bossRandomization: random
       majorsSplit: random
@@ -121,51 +122,15 @@ defines:
       objectiveMultiSelect: *mystery_objectives
 
 races:
-  - datetime: 2022-12-03 14:30
-    desc: Casual - Chozo, boss shuffle
+  - datetime: 2022-11-05 14:30
+    desc: Casual - M/m, boss shuffle
     skills_preset: casual
     settings_preset: VARIA_Weekly
     custom_settings:
-      majorsSplit: Chozo
-      bossRandomization: on
-
-  - datetime: 2022-12-03 17:30
-    desc: Hard - Full countdown, area rando, random start
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    custom_settings:
-      progressionSpeed: speedrun
-      majorsSplit: FullWithHUD
-      hud: on
-      startLocation: random
-      startLocationMultiSelect: *hard_random_starts
-      variaTweaks: on
-      suitsRestriction: off
-      areaRandomization: full
-      areaLayout: on
-      escapeRando: on
-      removeEscapeEnemies: on
-
-  - datetime: 2022-12-10 14:30
-    desc: Casual - Archipelago Multiworld
-    team: true
-
-  - datetime: 2022-12-10 17:30
-    desc: Hard - M/m, boss shuffle
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    custom_settings:
-      progressionSpeed: speedrun
       majorsSplit: Major
       bossRandomization: on
 
-  - datetime: 2022-12-17 14:30
-    desc: Casual - Mystery (no area, no door color)
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
-    <<: *casual_mystery
-
-  - datetime: 2022-12-17 17:30
+  - datetime: 2022-11-05 17:30
     desc: Hard - Full countdown
     skills_preset: Season_Races
     settings_preset: Season_Races
@@ -173,3 +138,48 @@ races:
       progressionSpeed: speedrun
       majorsSplit: FullWithHUD
       hud: on
+
+  - datetime: 2022-11-12 14:30
+    desc: Casual - Multiworld (Full)
+    team: true
+
+  - datetime: 2022-11-12 17:30
+    desc: Hard - Chozo, random objectives
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: Chozo
+      objectiveRandom: "true"
+      nbObjective: 4
+      objective: *mystery_objectives
+      objectiveMultiSelect: *mystery_objectives
+
+  - datetime: 2022-11-19 14:30
+    desc: Casual - Full countdown, random start
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    custom_settings:
+      majorsSplit: FullWithHUD
+      hud: on
+      startLocation: random
+      startLocationMultiSelect: *casual_random_starts
+      suitsRestriction: off
+
+  - datetime: 2022-11-19 17:30
+    desc: Hard - haste (M/m, progressive suits, starter charge)
+    skills_preset: Season_Races
+    settings_preset: haste
+
+  - datetime: 2022-11-26 14:30
+    desc: Casual - M/m
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    custom_settings:
+      majorsSplit: Major
+
+  - datetime: 2022-11-26 17:30
+    desc: Hard - Mystery
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    <<: *hard_mystery

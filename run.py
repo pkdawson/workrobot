@@ -63,8 +63,10 @@ class Runner:
                         self.races_scheduled.add(tstr)
                         self.logger.info(f'Race soon: {tstr}')
                         self.logger.info(race)
-                        # TODO: adjust delta automatically for team races
-                        room_time = t - timedelta(minutes=30)
+
+                        rt_delta = timedelta(minutes=45) if race.get(
+                            'team', False) else timedelta(minutes=30)
+                        room_time = t - rt_delta
                         self.scheduler.add_job(
                             self.open_raceroom, 'date', run_date=room_time, args=[race], id=tstr, misfire_grace_time=600)
 

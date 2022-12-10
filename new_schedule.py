@@ -5,9 +5,11 @@ from datetime import datetime, date, time
 from common import *
 import fileinput
 
+
 class NonAliasingRTRepresenter(ruamel.yaml.RoundTripRepresenter):
     def ignore_aliases(self, data):
         return True
+
 
 def main():
     out = {'races': []}

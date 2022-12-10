@@ -68,6 +68,7 @@ defines:
     - clear upper norfair
     - clear croc's lair
     - clear lower norfair
+    - clear west maridia
     - clear east maridia
     - tickle the red fish
     - kill the orange geemer
@@ -85,8 +86,10 @@ defines:
       progressionSpeed: speedrun
 
   casual_mystery: &casual_mystery
+    baseurl: *beta_url
     custom_settings:
       progressionDifficultyMultiSelect: [easier, normal, harder]
+      doorsColorsRando: random
       bossRandomization: random
       majorsSplit: random
       majorsSplitMultiSelect: [Full, Major, Chozo]
@@ -100,13 +103,14 @@ defines:
       objectiveMultiSelect: *mystery_objectives
 
   hard_mystery: &hard_mystery
+    baseurl: *beta_url
     custom_settings:
       progressionSpeed: speedrun
       missileQty: random
       superQty: random
       powerBombQty: random
       minorQty: random
-      # areaRandomization: random
+      areaRandomization: random
       escapeRando: random
       bossRandomization: random
       majorsSplit: random
@@ -115,13 +119,31 @@ defines:
       morphPlacementMultiSelect: [early, late, normal]
       gravityBehaviour: random
       gravityBehaviourMultiSelect: [Balanced, Progressive]
-      objectiveRandom: "true"
-      nbObjective: 4
-      objective: *mystery_objectives
-      objectiveMultiSelect: *mystery_objectives
+      objective: random
+      objectiveMultiSelect: *boss_objectives
 
 races:
-  - datetime: 2022-12-03 14:30
+  - datetime: 2022-10-01 14:30
+    desc: Casual - M/m
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    custom_settings:
+      majorsSplit: Major
+
+  - datetime: 2022-10-01 17:30
+    desc: Hard - M/m, light area rando
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: Major
+      areaRandomization: on
+      areaLayout: on
+      lightAreaRandomization: on
+      escapeRando: on
+      removeEscapeEnemies: on
+
+  - datetime: 2022-10-08 14:30
     desc: Casual - Chozo, boss shuffle
     skills_preset: casual
     settings_preset: VARIA_Weekly
@@ -129,10 +151,87 @@ races:
       majorsSplit: Chozo
       bossRandomization: on
 
-  - datetime: 2022-12-03 17:30
-    desc: Hard - Full countdown, area rando, random start
+  - datetime: 2022-10-08 17:30
+    desc: Hard - Full countdown
     skills_preset: Season_Races
     settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: FullWithHUD
+      hud: on
+
+  - datetime: 2022-10-15 14:30
+    desc: Casual - Multiworld (M/m)
+    team: true
+
+  - datetime: 2022-10-15 17:30
+    desc: Hard - Full countdown, random objectives
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    baseurl: *beta_url
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: FullWithHUD
+      hud: on
+      objectiveRandom: "true"
+      nbObjective: 4
+      objective:
+        - kill kraid
+        - kill phantoon
+        - kill draygon
+        - kill ridley
+        - kill one G4
+        - kill two G4
+        - kill three G4
+        - kill spore spawn
+        - kill botwoon
+        - kill crocomire
+        - kill golden torizo
+        - kill one miniboss
+        - kill two minibosses
+        - kill three minibosses
+        - kill all mini bosses
+        - collect 25% items
+        - collect 50% items
+        - clear crateria
+        - clear green brinstar
+        - clear red brinstar
+        - clear wrecked ship
+        - clear kraid's lair
+        - clear upper norfair
+        - clear croc's lair
+        - clear lower norfair
+        - clear west maridia
+        - clear east maridia
+        - tickle the red fish
+        - kill the orange geemer
+        - visit the animals
+        - kill king cacatac
+
+  - datetime: 2022-10-22 14:30
+    desc: Casual - Mystery
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    <<: *casual_mystery
+
+  - datetime: 2022-10-22 17:30
+    desc: Hard - Chozo
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+      majorsSplit: Chozo
+
+  - datetime: 2022-10-29 14:30
+    desc: Casual - Full countdown
+    <<: *casual
+    custom_settings:
+      majorsSplit: FullWithHUD
+      hud: on
+
+  - datetime: 2022-10-29 17:30
+    desc: Hard - Full countdown, area rando, random start
+    <<: *hard
     custom_settings:
       progressionSpeed: speedrun
       majorsSplit: FullWithHUD
@@ -141,35 +240,7 @@ races:
       startLocationMultiSelect: *hard_random_starts
       variaTweaks: on
       suitsRestriction: off
-      areaRandomization: full
+      areaRandomization: on
       areaLayout: on
       escapeRando: on
       removeEscapeEnemies: on
-
-  - datetime: 2022-12-10 14:30
-    desc: Casual - Archipelago Multiworld
-    team: true
-
-  - datetime: 2022-12-10 17:30
-    desc: Hard - M/m, boss shuffle
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    custom_settings:
-      progressionSpeed: speedrun
-      majorsSplit: Major
-      bossRandomization: on
-
-  - datetime: 2022-12-17 14:30
-    desc: Casual - Mystery (no area, no door color)
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
-    <<: *casual_mystery
-
-  - datetime: 2022-12-17 17:30
-    desc: Hard - Full countdown
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    custom_settings:
-      progressionSpeed: speedrun
-      majorsSplit: FullWithHUD
-      hud: on
