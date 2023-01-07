@@ -1,175 +1,50 @@
 %YAML 1.2
 ---
-defines:
-  beta_url: &beta_url https://variabeta.pythonanywhere.com
-
-  casual_random_starts: &casual_random_starts
-    - Gauntlet Top
-    - Green Brinstar Elevator
-    - Big Pink
-    - Etecoons Supers
-    - Wrecked Ship Main
-    - Business Center
-
-  hard_random_starts: &hard_random_starts
-    - Gauntlet Top
-    - Green Brinstar Elevator
-    - Big Pink
-    - Etecoons Supers
-    - Wrecked Ship Main
-    - Business Center
-    - Firefleas Top
-    - Bubble Mountain
-    - Mama Turtle
-    - Red Brinstar Elevator
-    - Golden Four
-
-  boss_objectives: &boss_objectives
-    - kill kraid
-    - kill phantoon
-    - kill draygon
-    - kill ridley
-    - kill one G4
-    - kill two G4
-    - kill three G4
-    - kill all G4
-    - kill spore spawn
-    - kill botwoon
-    - kill crocomire
-    - kill golden torizo
-    - kill one miniboss
-    - kill two minibosses
-    - kill three minibosses
-    - kill all mini bosses
-
-  mystery_objectives: &mystery_objectives
-    - kill kraid
-    - kill phantoon
-    - kill draygon
-    - kill ridley
-    - kill one G4
-    - kill two G4
-    - kill three G4
-    - kill spore spawn
-    - kill botwoon
-    - kill crocomire
-    - kill golden torizo
-    - kill one miniboss
-    - kill two minibosses
-    - kill three minibosses
-    - kill all mini bosses
-    - collect 25% items
-    - collect 50% items
-    - clear crateria
-    - clear green brinstar
-    - clear red brinstar
-    - clear wrecked ship
-    - clear kraid's lair
-    - clear upper norfair
-    - clear croc's lair
-    - clear lower norfair
-    - clear east maridia
-    - tickle the red fish
-    - kill the orange geemer
-    - visit the animals
-    - kill king cacatac
-
-  casual: &casual
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
-
-  hard: &hard
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    custom_settings:
-      progressionSpeed: speedrun
-
-  casual_mystery: &casual_mystery
-    custom_settings:
-      progressionDifficultyMultiSelect: [easier, normal, harder]
-      bossRandomization: random
-      majorsSplit: random
-      majorsSplitMultiSelect: [Full, Major, Chozo]
-      morphPlacement: random
-      morphPlacementMultiSelect: [early, late, normal]
-      gravityBehaviour: random
-      gravityBehaviourMultiSelect: [Balanced, Progressive]
-      objectiveRandom: "true"
-      nbObjective: 4
-      objective: *mystery_objectives
-      objectiveMultiSelect: *mystery_objectives
-
-  hard_mystery: &hard_mystery
-    custom_settings:
-      progressionSpeed: speedrun
-      missileQty: random
-      superQty: random
-      powerBombQty: random
-      minorQty: random
-      # areaRandomization: random
-      escapeRando: random
-      bossRandomization: random
-      majorsSplit: random
-      majorsSplitMultiSelect: [Full, Major, Chozo]
-      morphPlacement: random
-      morphPlacementMultiSelect: [early, late, normal]
-      gravityBehaviour: random
-      gravityBehaviourMultiSelect: [Balanced, Progressive]
-      objectiveRandom: "true"
-      nbObjective: 4
-      objective: *mystery_objectives
-      objectiveMultiSelect: *mystery_objectives
-
 races:
-  - datetime: 2022-12-03 14:30
-    desc: Casual - Chozo, boss shuffle
+  - datetime: 2023-01-07 14:30
+    desc: Casual - Full countdown
     skills_preset: casual
     settings_preset: VARIA_Weekly
-    custom_settings:
-      majorsSplit: Chozo
-      bossRandomization: on
 
-  - datetime: 2022-12-03 17:30
-    desc: Hard - Full countdown, area rando, random start
+  - datetime: 2023-01-07 17:30
+    desc: Hard - Chozo, boss shuffle
     skills_preset: Season_Races
     settings_preset: Season_Races
     custom_settings:
       progressionSpeed: speedrun
-      majorsSplit: FullWithHUD
-      hud: on
-      startLocation: random
-      startLocationMultiSelect: *hard_random_starts
-      variaTweaks: on
-      suitsRestriction: off
-      areaRandomization: full
-      areaLayout: on
-      escapeRando: on
-      removeEscapeEnemies: on
 
-  - datetime: 2022-12-10 14:30
+  - datetime: 2023-01-14 14:30
+    desc: Casual - M/m, random objectives
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+
+  - datetime: 2023-01-14 17:30
+    desc: Hard - haste (M/m, progressive suits, starter charge)
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+
+  - datetime: 2023-01-21 14:30
     desc: Casual - Archipelago Multiworld
-    team: true
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
 
-  - datetime: 2022-12-10 17:30
-    desc: Hard - M/m, boss shuffle
+  - datetime: 2023-01-21 17:30
+    desc: Hard - Mystery
     skills_preset: Season_Races
     settings_preset: Season_Races
     custom_settings:
       progressionSpeed: speedrun
-      majorsSplit: Major
-      bossRandomization: on
 
-  - datetime: 2022-12-17 14:30
-    desc: Casual - Mystery (no area, no door color)
+  - datetime: 2023-01-28 14:30
+    desc: Casual - Chozo, random start
     skills_preset: casual
     settings_preset: VARIA_Weekly
-    <<: *casual_mystery
 
-  - datetime: 2022-12-17 17:30
+  - datetime: 2023-01-28 17:30
     desc: Hard - Full countdown
     skills_preset: Season_Races
     settings_preset: Season_Races
     custom_settings:
       progressionSpeed: speedrun
-      majorsSplit: FullWithHUD
-      hud: on
