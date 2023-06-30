@@ -1,4 +1,4 @@
-pyz3r
+pyz3r>=6.0.7
 ruamel.yaml
 tzdata
 disnake

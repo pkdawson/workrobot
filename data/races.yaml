@@ -1,49 +1,61 @@
 %YAML 1.2
 ---
 races:
-  - datetime: 2023-01-07 14:30
+  - datetime: 2023-07-01 14:30
+    desc: Casual - M/m, random start
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+
+  - datetime: 2023-07-01 17:30
+    desc: Hard - SGL23Online (M/m, full area, boss shuffle)
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+
+  - datetime: 2023-07-08 14:30
     desc: Casual - Full countdown
     skills_preset: casual
     settings_preset: VARIA_Weekly
 
-  - datetime: 2023-01-07 17:30
-    desc: Hard - Chozo, boss shuffle
+  - datetime: 2023-07-08 17:30
+    desc: Hard - SGL23Online (M/m, full area, boss shuffle)
     skills_preset: Season_Races
     settings_preset: Season_Races
     custom_settings:
       progressionSpeed: speedrun
 
-  - datetime: 2023-01-14 14:30
+  - datetime: 2023-07-15 14:30
+    desc: Casual - Full countdown, boss shuffle
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+
+  - datetime: 2023-07-15 17:30
+    desc: Hard - SGL23Online (M/m, full area, boss shuffle)
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+
+  - datetime: 2023-07-22 14:30
+    desc: Casual - Chozo
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+
+  - datetime: 2023-07-22 17:30
+    desc: Hard - Mystery (no area rando)
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+
+  - datetime: 2023-07-29 14:30
     desc: Casual - M/m, random objectives
     skills_preset: casual
     settings_preset: VARIA_Weekly
 
-  - datetime: 2023-01-14 17:30
-    desc: Hard - haste (M/m, progressive suits, starter charge)
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    custom_settings:
-      progressionSpeed: speedrun
-
-  - datetime: 2023-01-21 14:30
-    desc: Casual - Archipelago Multiworld
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
-
-  - datetime: 2023-01-21 17:30
-    desc: Hard - Mystery
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    custom_settings:
-      progressionSpeed: speedrun
-
-  - datetime: 2023-01-28 14:30
-    desc: Casual - Chozo, random start
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
-
-  - datetime: 2023-01-28 17:30
-    desc: Hard - Full countdown
+  - datetime: 2023-07-29 17:30
+    desc: Hard - Full countdown, random start
     skills_preset: Season_Races
     settings_preset: Season_Races
     custom_settings:

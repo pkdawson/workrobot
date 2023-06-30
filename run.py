@@ -84,7 +84,7 @@ class Runner:
             if dt.isoweekday() == w['isoweekday'] and dt.time() == time.fromisoformat(w['time']):
                 return w
         else:
-            return {'msg': 'race starts {reltime} [{desc}]'}
+            return {'msg': 'race starts {reltime}\n\nsettings: **{desc}**\n\n'}
 
     async def announce_raceroom(self, race, name):
         dt = to_datetime(race['datetime'])
