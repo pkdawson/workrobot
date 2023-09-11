@@ -12,10 +12,10 @@ class NonAliasingRTRepresenter(ruamel.yaml.RoundTripRepresenter):
 
 
 def main():
-    out = {'races': []}
+    out = {"races": []}
 
-    yaml = YAML(typ='safe')
-    with open('data/common.yaml', 'r') as fi:
+    yaml = YAML(typ="safe")
+    with open("data/common.yaml", "r") as fi:
         ydat = yaml.load(fi)
 
     d = date.today()
@@ -30,18 +30,18 @@ def main():
     try:
         while True:
             d = date(year, month, day)
-            for w in ydat['weekly']:
-                if w['isoweekday'] == d.isoweekday():
-                    t = time.fromisoformat(w['time'])
+            for w in ydat["weekly"]:
+                if w["isoweekday"] == d.isoweekday():
+                    t = time.fromisoformat(w["time"])
                     dt = datetime.combine(d, t, tzinfo=RACETZ)
-                    r = {'datetime': dt.strftime('%Y-%m-%d %H:%M')}
+                    r = {"datetime": dt.strftime("%Y-%m-%d %H:%M")}
                     for k in w.keys():
-                        if k not in ('isoweekday', 'time', 'msg'):
+                        if k not in ("isoweekday", "time", "msg"):
                             r[k] = w[k]
                     kw = dt.isocalendar().week
 
                     sunday = d.isoweekday() == 7
-                    casual = r['skills_preset'] == 'casual'
+                    casual = r["skills_preset"] == "casual"
 
                     # alternate simple and complex, and do the opposite on Sunday
                     simple = True
@@ -51,10 +51,10 @@ def main():
                         simple = not simple
 
                     if simple:
-                        r['desc'] += ' - Simple'
+                        r["desc"] += " - Simple"
                     else:
-                        r['desc'] += ' - Complex'
-                    out['races'].append(r)
+                        r["desc"] += " - Complex"
+                    out["races"].append(r)
 
             day = day + 1
 
@@ -62,10 +62,10 @@ def main():
         pass
 
     # ugly hack
-    replace_last = 'Casual - Complex' if month % 2 == 0 else 'Hard - Complex'
-    for i, obj in reversed(list(enumerate(out['races']))):
-        if obj['desc'] == replace_last:
-            out['races'][i]['desc'] = obj['desc'].replace('Complex', 'Mystery')
+    replace_last = "Casual - Complex" if month % 2 == 0 else "Hard - Complex"
+    for i, obj in reversed(list(enumerate(out["races"]))):
+        if obj["desc"] == replace_last:
+            out["races"][i]["desc"] = obj["desc"].replace("Complex", "Mystery")
             break
 
     yout = YAML()
@@ -73,16 +73,16 @@ def main():
     yout.version = (1, 2)
     yout.indent(mapping=2, sequence=4, offset=2)
     yout.Representer = NonAliasingRTRepresenter
-    with open('data/races-new.yaml', 'w') as fout:
+    with open("data/races-new.yaml", "w") as fout:
         yout.dump(out, fout)
 
     # add whitespace
-    with fileinput.FileInput('data/races-new.yaml', inplace=True) as f:
+    with fileinput.FileInput("data/races-new.yaml", inplace=True) as f:
         for line in f:
-            if line.startswith('  -') and f.lineno() > 4:
+            if line.startswith("  -") and f.lineno() > 4:
                 print()
-            print(line, end='')
+            print(line, end="")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

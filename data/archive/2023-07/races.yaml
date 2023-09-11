@@ -1,0 +1,199 @@
+%YAML 1.2
+---
+defines:
+  beta_url: &beta_url https://variabeta.pythonanywhere.com
+
+  casual_random_starts: &casual_random_starts
+    - Gauntlet Top
+    - Green Brinstar Elevator
+    - Big Pink
+    - Etecoons Supers
+    - Wrecked Ship Main
+    - Business Center
+
+  hard_random_starts: &hard_random_starts
+    - Gauntlet Top
+    - Green Brinstar Elevator
+    - Big Pink
+    - Etecoons Supers
+    - Wrecked Ship Main
+    - Business Center
+    - Firefleas Top
+    - Bubble Mountain
+    - Mama Turtle
+    - Red Brinstar Elevator
+    - Golden Four
+
+  mystery_random_starts: &mystery_random_starts
+    - Ceres
+    - Landing Site
+    - Big Pink
+    - Bubble Mountain
+
+  boss_objectives: &boss_objectives
+    - kill kraid
+    - kill phantoon
+    - kill draygon
+    - kill ridley
+    - kill one G4
+    - kill two G4
+    - kill three G4
+    - kill all G4
+    - kill spore spawn
+    - kill botwoon
+    - kill crocomire
+    - kill golden torizo
+    - kill one miniboss
+    - kill two minibosses
+    - kill three minibosses
+    - kill all mini bosses
+
+  mystery_objectives: &mystery_objectives
+    - kill kraid
+    - kill phantoon
+    - kill draygon
+    - kill ridley
+    - kill one G4
+    - kill two G4
+    - kill three G4
+    - kill spore spawn
+    - kill botwoon
+    - kill crocomire
+    - kill golden torizo
+    - kill one miniboss
+    - kill two minibosses
+    - kill three minibosses
+    - kill all mini bosses
+    - collect 25% items
+    - collect 50% items
+    - clear crateria
+    - clear green brinstar
+    - clear red brinstar
+    - clear wrecked ship
+    - clear kraid's lair
+    - clear upper norfair
+    - clear croc's lair
+    - clear lower norfair
+    - clear west maridia
+    - clear east maridia
+    - tickle the red fish
+    - kill the orange geemer
+    - visit the animals
+    - kill king cacatac
+
+  casual: &casual
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+
+  hard: &hard
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+
+  casual_mystery: &casual_mystery
+    custom_settings:
+      progressionDifficultyMultiSelect: [easier, normal, harder]
+      bossRandomization: random
+      majorsSplit: random
+      majorsSplitMultiSelect: [Full, Major, Chozo]
+      morphPlacement: random
+      morphPlacementMultiSelect: [early, late, normal]
+      gravityBehaviour: random
+      gravityBehaviourMultiSelect: [Balanced, Progressive]
+      objectiveRandom: "true"
+      nbObjective: 4
+      objective: *mystery_objectives
+      objectiveMultiSelect: *mystery_objectives
+      startLocation: random
+      startLocationMultiSelect: *mystery_random_starts
+
+  hard_mystery: &hard_mystery
+    custom_settings:
+      progressionSpeed: speedrun
+      missileQty: random
+      superQty: random
+      powerBombQty: random
+      minorQty: random
+      areaLayout: on
+      areaRandomization: random
+      areaRandomizationMultiSelect: [off, full]
+      escapeRando: random
+      bossRandomization: random
+      majorsSplit: random
+      majorsSplitMultiSelect: [Full, Major, Chozo]
+      morphPlacement: random
+      morphPlacementMultiSelect: [early, late, normal]
+      gravityBehaviour: random
+      gravityBehaviourMultiSelect: [Balanced, Progressive]
+      objectiveRandom: "true"
+      nbObjective: 4
+      objective: *mystery_objectives
+      objectiveMultiSelect: *mystery_objectives
+
+races:
+  - datetime: 2023-07-01 14:30
+    desc: Casual - M/m, random start
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    custom_settings:
+      majorsSplit: Major
+      startLocation: random
+      startLocationMultiSelect: *casual_random_starts
+      suitsRestriction: off
+
+  - datetime: 2023-07-01 17:30
+    desc: Hard - SGL23Online (M/m, full area, boss shuffle)
+    skills_preset: Season_Races
+    settings_preset: SGL23Online
+
+  - datetime: 2023-07-08 14:30
+    desc: Casual - Full countdown
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+
+  - datetime: 2023-07-08 17:30
+    desc: Hard - SGL23Online (M/m, full area, boss shuffle)
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+
+  - datetime: 2023-07-15 14:30
+    desc: Casual - Full countdown, boss shuffle
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+
+  - datetime: 2023-07-15 17:30
+    desc: Hard - SGL23Online (M/m, full area, boss shuffle)
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+
+  - datetime: 2023-07-22 14:30
+    desc: Casual - Chozo
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+
+  - datetime: 2023-07-22 17:30
+    desc: Hard - Mystery (no area rando)
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+
+  - datetime: 2023-07-29 14:30
+    desc: Casual - M/m, random objectives
+
+  - datetime: 2023-07-29 17:30
+    desc: Hard - Full countdown, random start
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    custom_settings:
+      progressionSpeed: speedrun
+      startLocation: random
+      startLocationMultiSelect: *hard_random_starts
+      suitsRestriction: off
+      majorsSplit: FullWithHUD
+      hud: on

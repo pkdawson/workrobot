@@ -1,0 +1,46 @@
+races:
+  - datetime: 2023-08-05 14:30
+    desc: Casual - M/m
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mm
+
+  - datetime: 2023-08-05 17:30
+    desc: Hard - Chozo, boss shuffle
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/chozo_boss
+
+  - datetime: 2023-08-12 14:30
+    desc: Casual - Full countdown, random start
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/fc_start
+
+  - datetime: 2023-08-12 17:30
+    desc: Hard - M/m, random objectives
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/mm_objectives
+
+  - datetime: 2023-08-19 14:30
+    desc: Casual - Total's Multiworld (Full, team race)
+    team: true
+
+  - datetime: 2023-08-19 17:30
+    desc: Hard - Full countdown, full area, random start
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/fc_area_start
+
+  - datetime: 2023-08-26 14:30
+    desc: Casual - Mystery
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mystery
+
+  - datetime: 2023-08-26 17:30
+    desc: Hard - Full countdown
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/fc

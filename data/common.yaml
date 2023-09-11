@@ -12,8 +12,6 @@ weekly:
     desc: Hard
     skills_preset: Season_Races
     settings_preset: Season_Races
-    custom_settings:
-      progressionSpeed: speedrun
 
   # - isoweekday: 7
   #   time: 13:00

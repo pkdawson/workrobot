@@ -36,7 +36,6 @@ class DiscordClient(disnake.Client):
 if __name__ == '__main__':
     import asyncio
     loop = asyncio.get_event_loop()
-    import asyncio
     logging.basicConfig(level=logging.DEBUG)
     loop = asyncio.events.new_event_loop()
     asyncio.events.set_event_loop(loop)

@@ -17,10 +17,10 @@ class ErrorHandler(logging.Handler):
         super().__init__()
 
     def emit(self, record):
-        if record.levelno >= logging.ERROR and not record.module.startswith('disnake'):
+        if record.levelno >= logging.ERROR and not record.module.startswith("disnake"):
             msg = self.format(record)
             loop = asyncio.events.get_event_loop()
-            loop.create_task(self.dc.dm(int(os.getenv('DISCORD_ME')), msg))
+            loop.create_task(self.dc.dm(int(os.getenv("DISCORD_ME")), msg))
 
 
 class Runner:
@@ -31,10 +31,12 @@ class Runner:
 
         self.scheduler = AsyncIOScheduler(event_loop=self.loop)
         self.dc = DiscordClient()
-        logging.basicConfig(level=logging.INFO, handlers=[
-                            logging.StreamHandler(), ErrorHandler(self.dc)])
+        logging.basicConfig(
+            level=logging.INFO,
+            handlers=[logging.StreamHandler(), ErrorHandler(self.dc)],
+        )
         self.lock = asyncio.Lock()
-        self.logger = logging.getLogger('workrobot')
+        self.logger = logging.getLogger("workrobot")
         self.logger.setLevel(logging.INFO)
         self.races_scheduled = set()
         self.dbg_once = 0
@@ -43,32 +45,42 @@ class Runner:
         self.logger.error(context)
 
     async def load_schedule(self):
-        self.logger.info('load_schedule')
+        self.logger.info("load_schedule")
         now = datetime.now()
         ydat = racedata._load_yaml()
         if self.test_race:
             self.test_race = False
-            ydat['races'][0]['desc'] = 'TEST RACE PLEASE IGNORE'
-            ydat['races'][0]['datetime'] = (
-                datetime.now(RACETZ) + timedelta(minutes=21)).isoformat()
+            ydat["races"][0]["desc"] = "TEST RACE PLEASE IGNORE"
+            ydat["races"][0]["datetime"] = (
+                datetime.now(RACETZ) + timedelta(minutes=21)
+            ).isoformat()
 
-        for race in ydat['races']:
-            tstr = race['datetime']
+        for race in ydat["races"]:
+            tstr = race["datetime"]
             t = to_datetime(tstr)
             if t > now:
                 delta = t - now
-                self.logger.info(f'Scheduled race in {delta}')
+                self.logger.info(f"Scheduled race in {delta}")
                 if delta < timedelta(minutes=60):
                     if tstr not in self.races_scheduled:
                         self.races_scheduled.add(tstr)
-                        self.logger.info(f'Race soon: {tstr}')
+                        self.logger.info(f"Race soon: {tstr}")
                         self.logger.info(race)
 
-                        rt_delta = timedelta(minutes=45) if race.get(
-                            'team', False) else timedelta(minutes=30)
+                        rt_delta = (
+                            timedelta(minutes=45)
+                            if race.get("team", False)
+                            else timedelta(minutes=30)
+                        )
                         room_time = t - rt_delta
                         self.scheduler.add_job(
-                            self.open_raceroom, 'date', run_date=room_time, args=[race], id=tstr, misfire_grace_time=600)
+                            self.open_raceroom,
+                            "date",
+                            run_date=room_time,
+                            args=[race],
+                            id=tstr,
+                            misfire_grace_time=600,
+                        )
 
     async def open_raceroom(self, race):
         name = await self.rtbot.create_room(race)
@@ -76,54 +88,64 @@ class Runner:
         await self.announce_raceroom(race, name)
 
     def get_weekly_info(self, dt):
-        yaml = YAML(typ='safe')
-        with open('data/common.yaml', 'r') as fi:
+        yaml = YAML(typ="safe")
+        with open("data/common.yaml", "r") as fi:
             ydat = yaml.load(fi)
 
-        for w in ydat['weekly']:
-            if dt.isoweekday() == w['isoweekday'] and dt.time() == time.fromisoformat(w['time']):
+        for w in ydat["weekly"]:
+            if dt.isoweekday() == w["isoweekday"] and dt.time() == time.fromisoformat(
+                w["time"]
+            ):
                 return w
         else:
-            return {'msg': 'race starts {reltime}\n\nsettings: **{desc}**\n\n'}
+            return {"msg": "race starts {reltime}\n\nsettings: **{desc}**\n\n"}
 
     async def announce_raceroom(self, race, name):
-        dt = to_datetime(race['datetime'])
+        dt = to_datetime(race["datetime"])
         w = self.get_weekly_info(dt)
         ts = int(dt.timestamp())
-        reltime = f'<t:{ts}:R>'
-        await self.dc.send_announcement(w['msg'].format(reltime=reltime, desc=race['desc']) + ' ' + self.rtbot.http_uri(f'/{name}'))
+        reltime = f"<t:{ts}:R>"
+        await self.dc.send_announcement(
+            w["msg"].format(reltime=reltime, desc=race["desc"])
+            + " "
+            + self.rtbot.http_uri(f"/{name}")
+        )
 
     def run(self):
         self.rtbot = RTBot(
             self.scheduler,
-            category_slug=os.getenv('RACETIME_CAT'),
-            client_id=os.getenv('RACETIME_CLIENT_ID'),
-            client_secret=os.getenv('RACETIME_CLIENT_SECRET'),
-            logger=logging.getLogger('racetime'))
+            category_slug=os.getenv("RACETIME_CAT"),
+            client_id=os.getenv("RACETIME_CLIENT_ID"),
+            client_secret=os.getenv("RACETIME_CLIENT_SECRET"),
+            logger=logging.getLogger("racetime"),
+        )
 
-        self.scheduler.configure(job_defaults={
-            'misfire_grace_time': 15,
-        })
+        self.scheduler.configure(
+            job_defaults={
+                "misfire_grace_time": 15,
+            }
+        )
         self.scheduler.start()
 
         # race schedule
         self.scheduler.add_job(self.load_schedule)
         self.scheduler.add_job(
-            self.load_schedule, 'interval', minutes=5, id='load_schedule')
+            self.load_schedule, "interval", minutes=5, id="load_schedule"
+        )
 
         # racetime
         self.loop.create_task(self.rtbot.reauthorize())
 
         # discord
-        self.loop.create_task(self.dc.start(os.getenv('DISCORD_TOKEN')))
+        self.loop.create_task(self.dc.start(os.getenv("DISCORD_TOKEN")))
 
         self.loop.set_exception_handler(self.handle_exception)
         self.loop.run_forever()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--test-race', action='store_true')
+    parser.add_argument("--test-race", action="store_true")
     args = parser.parse_args()
     try:
         r = Runner(test_race=args.test_race)
