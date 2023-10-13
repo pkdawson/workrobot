@@ -1,60 +1,43 @@
 %YAML 1.2
 ---
 races:
-  - datetime: 2023-09-02 14:30
-    desc: Casual - Chozo
+  - datetime: 2023-10-07 14:30
+    desc: Casual - Chozo, boss shuffle
     skills_preset: casual
     settings_preset: VARIA_Weekly
-    json: casual/chozo
+    json: casual/chozo_boss
 
-  - datetime: 2023-09-02 17:30
-    desc: Hard - Full countdown, random objectives
+  - datetime: 2023-10-07 17:30
+    desc: Hard - Chozo, random objectives
     skills_preset: Season_Races
     settings_preset: Season_Races
-    json: hard/fc_objectives
+    json: hard/chozo_objectives
 
-  - datetime: 2023-09-09 14:30
-    desc: Casual - M/m, random start
+  - datetime: 2023-10-14 14:30
+    desc: Casual - M/m, boss shuffle
     skills_preset: casual
     settings_preset: VARIA_Weekly
-    json: casual/mm_start
 
-  - datetime: 2023-09-09 17:30
-    desc: Hard - haste (M/m, progressive suits, starter charge)
+  - datetime: 2023-10-14 17:30
+    desc: Hard - Full countdown, full area, random start
     skills_preset: Season_Races
     settings_preset: Season_Races
-    json: hard/haste
 
-  - datetime: 2023-09-16 14:30
-    desc: Casual - Full countdown, boss shuffle
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
-    json: casual/fc_boss
+  - datetime: 2023-10-21 14:30
+    desc: Casual - Total's Multiworld (M/m, team race)
+    team: true
 
-  - datetime: 2023-09-16 17:30
-    desc: Hard - Chozo, light area, random start
+  - datetime: 2023-10-21 17:30
+    desc: Hard - M/m
     skills_preset: Season_Races
     settings_preset: Season_Races
-    json: hard/chozo_lightarea_start
 
-  - datetime: 2023-09-23 14:30
-    desc: Casual - M/m, random objectives
-    skills_preset: casual
-    settings_preset: VARIA_Weekly
-    json: casual/mm_objectives
-
-  - datetime: 2023-09-23 17:30
-    desc: Hard - M/m, boss shuffle
-    skills_preset: Season_Races
-    settings_preset: Season_Races
-    json: hard/mm_boss
-
-  - datetime: 2023-09-30 14:30
-    desc: Casual - Full countdown
+  - datetime: 2023-10-28 14:30
+    desc: Casual - Mystery
     skills_preset: casual
     settings_preset: VARIA_Weekly
 
-  - datetime: 2023-09-30 17:30
-    desc: Hard - Mystery
+  - datetime: 2023-10-28 17:30
+    desc: Hard - Full countdown, boss shuffle
     skills_preset: Season_Races
     settings_preset: Season_Races
