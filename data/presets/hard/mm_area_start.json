@@ -45,7 +45,7 @@
   "objective": [
     "kill all G4"
   ],
-  "majorsSplit": "FullWithHUD",
+  "majorsSplit": "Major",
   "startLocation": "random",
   "startLocationMultiSelect": [
     "Landing Site",

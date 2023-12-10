@@ -5,7 +5,7 @@
   "areaLayout": "on",
   "removeEscapeEnemies": "on",
   "layoutPatches": "on",
-  "variaTweaks": "off",
+  "variaTweaks": "on",
   "nerfedCharge": "off",
   "itemsounds": "off",
   "elevators_speed": "off",
