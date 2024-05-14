@@ -1,0 +1,50 @@
+%YAML 1.2
+---
+races:
+  - datetime: 2024-02-03 14:30
+    desc: Casual - Chozo
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/chozo
+
+  - datetime: 2024-02-03 17:30
+    desc: Hard - M/m, boss shuffle
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/mm_boss
+
+  - datetime: 2024-02-10 14:30
+    desc: Casual - M/m, random objectives
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mm_objectives
+
+  - datetime: 2024-02-10 17:30
+    desc: Hard - Full countdown
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/fc
+
+  - datetime: 2024-02-17 14:30
+    desc: Casual - Full countdown, boss shuffle
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/fc_boss
+
+  - datetime: 2024-02-17 17:30
+    desc: Hard - Chozo, full area, random start
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/chozo_area_start
+
+  - datetime: 2024-02-24 14:30
+    desc: Casual - Mystery
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mystery
+
+  - datetime: 2024-02-24 17:30
+    desc: Hard - haste (M/m, progressive suits, starter charge)
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/haste

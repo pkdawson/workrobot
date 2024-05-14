@@ -1,0 +1,60 @@
+%YAML 1.2
+---
+races:
+  - datetime: 2024-03-02 14:30
+    desc: Casual - Full countdown
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/fc
+
+  - datetime: 2024-03-02 17:30
+    desc: Hard - M/m, random objectives
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/mm_objectives
+
+  - datetime: 2024-03-09 14:30
+    desc: Casual - M/m, random start
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mm_start
+
+  - datetime: 2024-03-09 17:30
+    desc: Hard - Chozo
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/chozo
+
+  - datetime: 2024-03-16 14:30
+    desc: Casual - M/m, boss shuffle
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mm_boss
+
+  - datetime: 2024-03-16 17:30
+    desc: Hard - M/m, full area, random start
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/mm_area_start
+
+  - datetime: 2024-03-23 14:30
+    desc: Casual - Total's Multiworld (Full, team race)
+    team: true
+
+  - datetime: 2024-03-23 17:30
+    desc: Hard - Full countdown, boss shuffle
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/fc_boss
+
+  - datetime: 2024-03-30 14:30
+    desc: Casual - M/m
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mm
+
+  - datetime: 2024-03-30 17:30
+    desc: Hard - Mystery
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/mystery

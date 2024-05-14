@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+races:
+  - datetime: 2023-12-02 14:30
+    desc: Casual - M/m, random start
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mm_start
+
+  - datetime: 2023-12-02 17:30
+    desc: Hard - Full countdown, boss shuffle
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/fc_boss
+
+  - datetime: 2023-12-09 14:30
+    desc: Casual - Full countdown, custom objective (all minibosses)
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/fc_minibosses
+
+  - datetime: 2023-12-09 17:30
+    desc: Hard - M/m, full area, random start
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/mm_area_start

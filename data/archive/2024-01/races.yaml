@@ -1,0 +1,36 @@
+%YAML 1.2
+---
+races:
+  - datetime: 2024-01-13 14:30
+    desc: Casual - M/m, boss shuffle
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mm_boss
+
+  - datetime: 2024-01-13 17:30
+    desc: Hard - Full countdown
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/fc
+
+  - datetime: 2024-01-20 14:30
+    desc: Casual - Full countdown, random start
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/fc_start
+
+  - datetime: 2024-01-20 17:30
+    desc: Hard - Mystery
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/mystery
+
+  - datetime: 2024-01-27 14:30
+    desc: Casual - Total's Multiworld (M/m, team race)
+    team: true
+
+  - datetime: 2024-01-27 17:30
+    desc: Hard - Chozo, boss shuffle
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/chozo_boss

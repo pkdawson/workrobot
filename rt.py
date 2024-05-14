@@ -158,7 +158,7 @@ class RTBot(Bot):
 
     async def create_room(self, race):
         d = {
-            "goal": self.racetime_goal,
+            "goal": race.get("goal", self.racetime_goal),
             "team_race": race.get("team", False),
             "invitational": False,
             "unlisted": False,
