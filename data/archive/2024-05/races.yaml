@@ -1,0 +1,50 @@
+%YAML 1.2
+---
+races:
+  - datetime: 2024-05-04 14:30
+    desc: Casual - M/m, random objectives
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mm_objectives
+
+  - datetime: 2024-05-04 17:30
+    desc: Hard - Full countdown, boss shuffle
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/fc_boss
+
+  - datetime: 2024-05-11 14:30
+    desc: Casual - Full countdown
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/fc
+
+  - datetime: 2024-05-11 17:30
+    desc: Hard - M/m, light area, random start
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/mm_lightarea_start
+
+  - datetime: 2024-05-18 14:30
+    desc: Casual - M/m, boss shuffle
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mm_boss
+
+  - datetime: 2024-05-18 17:30
+    desc: Hard - Chozo
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/chozo
+
+  - datetime: 2024-05-25 14:30
+    desc: Casual - M/m, random start
+    skills_preset: casual
+    settings_preset: VARIA_Weekly
+    json: casual/mm_start
+
+  - datetime: 2024-05-25 17:30
+    desc: Hard - Mystery
+    skills_preset: Season_Races
+    settings_preset: Season_Races
+    json: hard/mystery
